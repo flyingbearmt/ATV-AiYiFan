@@ -1,0 +1,557 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXContainerItemProxy section */
+		450559392DDEA38900F8113B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 450559232DDEA38700F8113B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4505592A2DDEA38700F8113B;
+			remoteInfo = "ATV-AiYiFan";
+		};
+		450559432DDEA38900F8113B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 450559232DDEA38700F8113B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4505592A2DDEA38700F8113B;
+			remoteInfo = "ATV-AiYiFan";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		4505592B2DDEA38700F8113B /* ATV-AiYiFan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ATV-AiYiFan.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		450559382DDEA38900F8113B /* ATV-AiYiFanTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ATV-AiYiFanTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		450559422DDEA38900F8113B /* ATV-AiYiFanUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ATV-AiYiFanUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		4505592D2DDEA38700F8113B /* ATV-AiYiFan */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "ATV-AiYiFan";
+			sourceTree = "<group>";
+		};
+		4505593B2DDEA38900F8113B /* ATV-AiYiFanTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "ATV-AiYiFanTests";
+			sourceTree = "<group>";
+		};
+		450559452DDEA38900F8113B /* ATV-AiYiFanUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "ATV-AiYiFanUITests";
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		450559282DDEA38700F8113B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		450559352DDEA38900F8113B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4505593F2DDEA38900F8113B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		450559222DDEA38700F8113B = {
+			isa = PBXGroup;
+			children = (
+				4505592D2DDEA38700F8113B /* ATV-AiYiFan */,
+				4505593B2DDEA38900F8113B /* ATV-AiYiFanTests */,
+				450559452DDEA38900F8113B /* ATV-AiYiFanUITests */,
+				4505592C2DDEA38700F8113B /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		4505592C2DDEA38700F8113B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4505592B2DDEA38700F8113B /* ATV-AiYiFan.app */,
+				450559382DDEA38900F8113B /* ATV-AiYiFanTests.xctest */,
+				450559422DDEA38900F8113B /* ATV-AiYiFanUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		4505592A2DDEA38700F8113B /* ATV-AiYiFan */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4505594C2DDEA38900F8113B /* Build configuration list for PBXNativeTarget "ATV-AiYiFan" */;
+			buildPhases = (
+				450559272DDEA38700F8113B /* Sources */,
+				450559282DDEA38700F8113B /* Frameworks */,
+				450559292DDEA38700F8113B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				4505592D2DDEA38700F8113B /* ATV-AiYiFan */,
+			);
+			name = "ATV-AiYiFan";
+			packageProductDependencies = (
+			);
+			productName = "ATV-AiYiFan";
+			productReference = 4505592B2DDEA38700F8113B /* ATV-AiYiFan.app */;
+			productType = "com.apple.product-type.application";
+		};
+		450559372DDEA38900F8113B /* ATV-AiYiFanTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4505594F2DDEA38900F8113B /* Build configuration list for PBXNativeTarget "ATV-AiYiFanTests" */;
+			buildPhases = (
+				450559342DDEA38900F8113B /* Sources */,
+				450559352DDEA38900F8113B /* Frameworks */,
+				450559362DDEA38900F8113B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4505593A2DDEA38900F8113B /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				4505593B2DDEA38900F8113B /* ATV-AiYiFanTests */,
+			);
+			name = "ATV-AiYiFanTests";
+			packageProductDependencies = (
+			);
+			productName = "ATV-AiYiFanTests";
+			productReference = 450559382DDEA38900F8113B /* ATV-AiYiFanTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		450559412DDEA38900F8113B /* ATV-AiYiFanUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 450559522DDEA38900F8113B /* Build configuration list for PBXNativeTarget "ATV-AiYiFanUITests" */;
+			buildPhases = (
+				4505593E2DDEA38900F8113B /* Sources */,
+				4505593F2DDEA38900F8113B /* Frameworks */,
+				450559402DDEA38900F8113B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				450559442DDEA38900F8113B /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				450559452DDEA38900F8113B /* ATV-AiYiFanUITests */,
+			);
+			name = "ATV-AiYiFanUITests";
+			packageProductDependencies = (
+			);
+			productName = "ATV-AiYiFanUITests";
+			productReference = 450559422DDEA38900F8113B /* ATV-AiYiFanUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		450559232DDEA38700F8113B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1630;
+				LastUpgradeCheck = 1630;
+				TargetAttributes = {
+					4505592A2DDEA38700F8113B = {
+						CreatedOnToolsVersion = 16.3;
+					};
+					450559372DDEA38900F8113B = {
+						CreatedOnToolsVersion = 16.3;
+						TestTargetID = 4505592A2DDEA38700F8113B;
+					};
+					450559412DDEA38900F8113B = {
+						CreatedOnToolsVersion = 16.3;
+						TestTargetID = 4505592A2DDEA38700F8113B;
+					};
+				};
+			};
+			buildConfigurationList = 450559262DDEA38700F8113B /* Build configuration list for PBXProject "ATV-AiYiFan" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 450559222DDEA38700F8113B;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 4505592C2DDEA38700F8113B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				4505592A2DDEA38700F8113B /* ATV-AiYiFan */,
+				450559372DDEA38900F8113B /* ATV-AiYiFanTests */,
+				450559412DDEA38900F8113B /* ATV-AiYiFanUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		450559292DDEA38700F8113B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		450559362DDEA38900F8113B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		450559402DDEA38900F8113B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		450559272DDEA38700F8113B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		450559342DDEA38900F8113B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4505593E2DDEA38900F8113B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		4505593A2DDEA38900F8113B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4505592A2DDEA38700F8113B /* ATV-AiYiFan */;
+			targetProxy = 450559392DDEA38900F8113B /* PBXContainerItemProxy */;
+		};
+		450559442DDEA38900F8113B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4505592A2DDEA38700F8113B /* ATV-AiYiFan */;
+			targetProxy = 450559432DDEA38900F8113B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		4505594A2DDEA38900F8113B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = GVWJLV397Y;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = appletvos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TVOS_DEPLOYMENT_TARGET = 18.4;
+			};
+			name = Debug;
+		};
+		4505594B2DDEA38900F8113B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = GVWJLV397Y;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = appletvos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				TVOS_DEPLOYMENT_TARGET = 18.4;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		4505594D2DDEA38900F8113B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = GVWJLV397Y;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.tongmiao.ATV-AiYiFan";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+			};
+			name = Debug;
+		};
+		4505594E2DDEA38900F8113B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = GVWJLV397Y;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.tongmiao.ATV-AiYiFan";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+			};
+			name = Release;
+		};
+		450559502DDEA38900F8113B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = GVWJLV397Y;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.tongmiao.ATV-AiYiFanTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ATV-AiYiFan.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ATV-AiYiFan";
+				TVOS_DEPLOYMENT_TARGET = 18.4;
+			};
+			name = Debug;
+		};
+		450559512DDEA38900F8113B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = GVWJLV397Y;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.tongmiao.ATV-AiYiFanTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ATV-AiYiFan.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ATV-AiYiFan";
+				TVOS_DEPLOYMENT_TARGET = 18.4;
+			};
+			name = Release;
+		};
+		450559532DDEA38900F8113B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = GVWJLV397Y;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.tongmiao.ATV-AiYiFanUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TEST_TARGET_NAME = "ATV-AiYiFan";
+			};
+			name = Debug;
+		};
+		450559542DDEA38900F8113B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = GVWJLV397Y;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.tongmiao.ATV-AiYiFanUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TEST_TARGET_NAME = "ATV-AiYiFan";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		450559262DDEA38700F8113B /* Build configuration list for PBXProject "ATV-AiYiFan" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4505594A2DDEA38900F8113B /* Debug */,
+				4505594B2DDEA38900F8113B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4505594C2DDEA38900F8113B /* Build configuration list for PBXNativeTarget "ATV-AiYiFan" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4505594D2DDEA38900F8113B /* Debug */,
+				4505594E2DDEA38900F8113B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4505594F2DDEA38900F8113B /* Build configuration list for PBXNativeTarget "ATV-AiYiFanTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				450559502DDEA38900F8113B /* Debug */,
+				450559512DDEA38900F8113B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		450559522DDEA38900F8113B /* Build configuration list for PBXNativeTarget "ATV-AiYiFanUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				450559532DDEA38900F8113B /* Debug */,
+				450559542DDEA38900F8113B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 450559232DDEA38700F8113B /* Project object */;
+}
