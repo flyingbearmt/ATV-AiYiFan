@@ -1,48 +1,62 @@
 import SwiftUI
 
 struct GalleryView: View {
-//    @State private var videos: [VideoItem] = []
-//    @State private var isLoading = true
-//
+    @State private var categories: [CategoryItem] = []
+    @State private var isLoading = true
+    @State private var errorMessage: String? = nil
+
     var body: some View {
-//        Group {
-//            if isLoading {
-//                ProgressView("Loading videos...")
-//            } else {
-//                ScrollView(.vertical) {
-//                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 300), spacing: 40)], spacing: 40) {
-//                        ForEach(videos) { video in
-//                            NavigationLink(destination: VideoDetailView(video: video)) {
-//                                VStack {
-//                                    AsyncImage(url: video.thumbnailURL) { image in
-//                                        image.resizable()
-//                                            .aspectRatio(contentMode: .fit)
-//                                            .cornerRadius(16)
-//                                    } placeholder: {
-//                                        Rectangle().fill(Color.gray.opacity(0.3))
-//                                            .frame(height: 170)
-//                                    }
-//                                    Text(video.title)
-//                                        .font(.title3)
-//                                        .foregroundColor(.primary)
-//                                        .padding(.top, 8)
-//                                }
-//                                .frame(width: 300)
-//                            }
-//                        }
-//                    }
-//                    .padding()
-//                }
-//            }
-//        }
-//        .onAppear {
-//            VideoService.fetchVideos { fetched in
-//                DispatchQueue.main.async {
-//                    self.videos = fetched
-//                    self.isLoading = false
-//                }
-//            }
-//        }
-//        .navigationTitle("Gallery")
+        Group {
+            if isLoading {
+                ProgressView("加载分类中... (Loading categories...)")
+            } else if let errorMessage = errorMessage {
+                Text(errorMessage)
+                    .foregroundColor(.red)
+            } else {
+                
+                NavigationSplitView{
+                    // category
+                } detail: {
+                    // movie browser view
+                }
+                List(categories, id: \ .path) { category in
+                    NavigationLink(destination: CategoriesView(path: category.path)) {
+                        HStack {
+                            Text(category.label)
+                                .font(.title2)
+                            Spacer()
+                            if category.isHot {
+                                Text("🔥")
+                            }
+                            if category.isNew {
+                                Text("🆕")
+                            }
+                        }
+                        .padding(.vertical, 8)
+                    }
+                }
+                .listStyle(.insetGrouped)
+            }
+        }
+        .onAppear {
+            fetchCatefories()
+        }
+        .navigationTitle("分类 (Categories)")
+    }
+    
+    private func fetchCatefories(){
+        CategoryService.shared.fetchCategories { result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let items):
+                    self.categories = items
+                    self.isLoading = false
+                case .failure(let error):
+                    self.errorMessage = "加载失败: \(error.localizedDescription)"
+                    self.isLoading = false
+                }
+            }
+        }
     }
 }
+

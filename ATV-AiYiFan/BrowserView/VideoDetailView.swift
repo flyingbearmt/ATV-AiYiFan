@@ -17,7 +17,7 @@ struct VideoDetailView: View {
                 Text(errorMessage)
                     .foregroundColor(.red)
             } else if let detail = videoDetail, let playKey = detail.key, !playKey.isEmpty {
-                NavigationView {
+                NavigationStack {
                     NavigationLink(
                         destination: PlayerView(key: playKey),
                         label: {
@@ -28,10 +28,10 @@ struct VideoDetailView: View {
                         }
                     )
                     
+                    Text(detail.title)
+                        .font(.largeTitle)
+                        .padding(.top, 16)
                 }
-                Text(detail.title)
-                    .font(.largeTitle)
-                    .padding(.top, 16)
             } else if let detail = videoDetail {
                 Text("无法获取播放Key (No play key found)")
                     .foregroundColor(.secondary)

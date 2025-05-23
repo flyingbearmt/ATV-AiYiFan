@@ -8,28 +8,37 @@ struct PlayerView: View {
     @State private var isLoading = false
 
     var body: some View {
-        VStack(spacing: 32) {
-            if isLoading {
-                ProgressView("加载播放地址中... (Loading video URL...)")
-            } else if let player = player {
+        ZStack {
+            // Video fills the whole screen when ready
+            if let player = player {
                 VideoPlayer(player: player)
-                    .aspectRatio(16/9, contentMode: .fit)
+                    .ignoresSafeArea()
+            }
+            // Loading and error overlays, centered
+            if isLoading {
+                Color.black.opacity(0.6).ignoresSafeArea()
+                ProgressView("加载播放地址中... (Loading video URL...)")
+                    .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                    .font(.title)
+                    .foregroundColor(.white)
+                    .padding()
+                    .background(Color.black.opacity(0.8))
                     .cornerRadius(16)
-                    .frame(maxWidth: 900)
             } else if let errorMessage = errorMessage {
+                Color.black.opacity(0.6).ignoresSafeArea()
                 VStack(spacing: 20) {
                     Image(systemName: "exclamationmark.triangle.fill")
                         .font(.system(size: 48))
                         .foregroundColor(.yellow)
                     Text(errorMessage)
                         .font(.title2)
-                        .foregroundColor(.secondary)
+                        .foregroundColor(.white)
                 }
-                .frame(maxWidth: .infinity, maxHeight: 300)
+                .padding()
+                .background(Color.black.opacity(0.8))
+                .cornerRadius(16)
             }
-            Spacer()
         }
-        .padding()
         .onAppear {
             fetchPlayURL()
         }
