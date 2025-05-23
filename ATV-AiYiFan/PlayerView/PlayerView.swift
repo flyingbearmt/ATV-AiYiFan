@@ -2,38 +2,80 @@ import SwiftUI
 import AVKit
 
 struct PlayerView: View {
-    let video: PlayURLInfo
-    @State private var player: AVPlayer
-    
-    init(video: PlayURLInfo) {
-        self.video = video
-        
-        let videourl = video.clarity.first?.path?.result ?? " "
-        _player = State(initialValue: AVPlayer(url: URL(string: videourl)!))
-    }
-    
+    let key: String
+    @State private var player: AVPlayer? = nil
+    @State private var errorMessage: String? = nil
+    @State private var isLoading = false
+
     var body: some View {
         VStack(spacing: 32) {
-            VideoPlayer(player: player)
-                .aspectRatio(16/9, contentMode: .fit)
-                .cornerRadius(16)
-                .frame(maxWidth: 900)
-            // Detail Section
-//            VStack(alignment: .leading, spacing: 8) {
-//                Text(video.title)
-//                    .font(.largeTitle)
-//                    .padding(.bottom, 4)
-//        
-//                Text(video.title)
-//                        .font(.body)
-//                        .foregroundColor(.secondary)
-//            
-//            }
+            if isLoading {
+                ProgressView("加载播放地址中... (Loading video URL...)")
+            } else if let player = player {
+                VideoPlayer(player: player)
+                    .aspectRatio(16/9, contentMode: .fit)
+                    .cornerRadius(16)
+                    .frame(maxWidth: 900)
+            } else if let errorMessage = errorMessage {
+                VStack(spacing: 20) {
+                    Image(systemName: "exclamationmark.triangle.fill")
+                        .font(.system(size: 48))
+                        .foregroundColor(.yellow)
+                    Text(errorMessage)
+                        .font(.title2)
+                        .foregroundColor(.secondary)
+                }
+                .frame(maxWidth: .infinity, maxHeight: 300)
+            }
             Spacer()
         }
         .padding()
+        .onAppear {
+            fetchPlayURL()
+        }
         .onDisappear {
-            player.pause()
+            player?.pause()
+        }
+    }
+
+    private func fetchPlayURL() {
+        isLoading = true
+        errorMessage = nil
+        PlayURLService.shared.fetchPlayURL(for: key) { result in
+            DispatchQueue.main.async {
+                isLoading = false
+                switch result {
+                case .success(let playInfo):
+                    var playURL: String? = nil
+                    if let clarities = playInfo?.clarity {
+                        // 1. Find the clarity with description == "auto"
+                        if let autoClarity = clarities.first(where: { $0.description == "auto" }) {
+                            playURL = autoClarity.path?.rtmp
+                        }
+                        // 2. If not found, find the highest bitrate with a valid path
+                        if playURL == nil {
+                            let sorted = clarities.sorted { ($0.bitrate ?? 0) > ($1.bitrate ?? 0) }
+                            if let best = sorted.first(where: { ($0.path?.rtmp?.isEmpty == false) }) {
+                                playURL = best.path?.rtmp
+                            }
+                        }
+                        // 3. Fallback: use the first available one
+                        if playURL == nil {
+                            playURL = clarities.first?.path?.rtmp
+                        }
+                    }
+                    if let urlString = playURL, let url = URL(string: urlString), !urlString.isEmpty {
+                        print("[PlayerView] Playing URL: \(urlString)")
+                        let avPlayer = AVPlayer(url: url)
+                        player = avPlayer
+                        avPlayer.play()
+                    } else {
+                        errorMessage = "无法获取播放地址 (No valid playback URL found)"
+                    }
+                case .failure(let error):
+                    errorMessage = "加载失败: \(error.localizedDescription)"
+                }
+            }
         }
     }
 }
