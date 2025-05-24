@@ -1,62 +1,143 @@
 import SwiftUI
 
 struct GalleryView: View {
-    @State private var categories: [CategoryItem] = []
-    @State private var isLoading = true
-    @State private var errorMessage: String? = nil
-
+    @StateObject private var groupVM = GroupListViewModel()
+    @StateObject private var genreVM = GenreListViewModel()
+    @StateObject private var movieVM = MovieListViewModel()
+    
+    @State private var selectedGroup: Group?
+    @State private var selectedGenre: GenreItem?
+    
     var body: some View {
-        Group {
-            if isLoading {
-                ProgressView("加载分类中... (Loading categories...)")
-            } else if let errorMessage = errorMessage {
-                Text(errorMessage)
+        NavigationSplitView {
+            SideGroupView(
+                groups: groupVM.groups,
+                selection: $selectedGroup
+            )
+        } content: {
+           GenreView(
+            selectionGroup:$selectedGroup,
+            genres: genreVM.genres,
+            selectionGenre: $selectedGenre,
+            isLoading: genreVM.isLoading,
+            errorMessage: genreVM.errorMessage
+           )
+        } detail: {
+            // Column 3: Movies
+            if movieVM.isLoading {
+                ProgressView("加载影片中...")
+            } else if let error = movieVM.errorMessage {
+                Text(error)
                     .foregroundColor(.red)
+                    .padding()
             } else {
-                
-                NavigationSplitView{
-                    // category
-                } detail: {
-                    // movie browser view
-                }
-                List(categories, id: \ .path) { category in
-                    NavigationLink(destination: CategoriesView(path: category.path)) {
-                        HStack {
-                            Text(category.label)
-                                .font(.title2)
-                            Spacer()
-                            if category.isHot {
-                                Text("🔥")
+                List(movieVM.movies, id: \.key) { movie in
+                    NavigationLink(destination: VideoDetailView(videoId: movie.key ?? "")) {
+                        HStack(spacing: 16) {
+                            if let imageUrl = movie.image, let url = URL(string: imageUrl) {
+                                AsyncImage(url: url) { image in
+                                    image.resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: 80, height: 120)
+                                        .cornerRadius(8)
+                                } placeholder: {
+                                    Rectangle()
+                                        .fill(Color.gray.opacity(0.3))
+                                        .frame(width: 80, height: 120)
+                                }
                             }
-                            if category.isNew {
-                                Text("🆕")
+                            
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text(movie.title ?? "无标题")
+                                    .font(.headline)
+                                Text(movie.regional ?? "")
+                                    .font(.subheadline)
+                                    .foregroundColor(.secondary)
                             }
                         }
                         .padding(.vertical, 8)
                     }
                 }
-                .listStyle(.insetGrouped)
+                .navigationTitle(selectedGenre?.name ?? "影片")
             }
-        }
-        .onAppear {
-            fetchCatefories()
+        } .onAppear {
+            // Only inject mock data for DEBUG/testing
+            groupVM.groups = [
+                Group(id: "movie", name: "电影"),
+                Group(id: "tv", name: "电视剧")
+            ]
+            genreVM.genres = [
+                GenreItem(id: "0,1,3,19", name: "喜剧", path: "/list/movie-19"),
+                GenreItem(id: "0,1,3,21", name: "动作", path: "/list/movie-21")
+            ]
+            movieVM.movies = [
+                CategoryBrowserItem(atypeName: "电影", videoClassID: "0,1,3,19", image: "https://via.placeholder.com/80x120.png?text=Movie1", key: "ZIv1XsdbQH2", lang: "中文", cid: "喜剧", lastName: "01", isShowTodayNum: false, title: "测试电影1", hot: 100, rating: "9.0", year: 2024, regional: "中国", addTime: "2024-01-01", directed: "导演A", starring: "演员A,演员B", shareCount: 1, dd: 1, dc: 1, comments: 1, favoriteCount: 1, contxt: "简介1", isSerial: false, updateweekly: "", cidMapper: "喜剧", lastKey: "", recommended: false, updates: 0, tags: nil, isFilm: true, isDocumentry: false, labels: "", charge: 0, vipResource: "1080P", sNo: "", serialCount: 0, score: "9.0", isFix: false)
+            ]
+            
+            if selectedGroup == nil, let first = groupVM.groups.first {
+                   selectedGroup = first
+               }
         }
         .navigationTitle("分类 (Categories)")
     }
     
-    private func fetchCatefories(){
-        CategoryService.shared.fetchCategories { result in
-            DispatchQueue.main.async {
-                switch result {
-                case .success(let items):
-                    self.categories = items
-                    self.isLoading = false
-                case .failure(let error):
-                    self.errorMessage = "加载失败: \(error.localizedDescription)"
-                    self.isLoading = false
+//    private func fetchCatefories(){
+//        CategoryService.shared.fetchCategories { result in
+//            DispatchQueue.main.async {
+//                switch result {
+//                case .success(let items):
+//                    self.categories = items
+//                    self.isLoading = false
+//                case .failure(let error):
+//                    self.errorMessage = "加载失败: \(error.localizedDescription)"
+//                    self.isLoading = false
+//                }
+//            }
+//        }
+//    }
+}
+
+struct SideGroupView: View {
+    let groups: [Group]
+    @Binding var selection: Group?
+
+    var body: some View {
+        List(selection: $selection) {
+            ForEach(groups) { group in
+                Text(group.name)
+                    .tag(group)
+            }
+        }
+        .navigationTitle("分类")
+    }
+}
+
+
+struct GenreView: View {
+    @Binding var selectionGroup: Group?
+    let genres: [GenreItem]
+    @Binding var selectionGenre: GenreItem?
+    let isLoading: Bool
+    let errorMessage: String?
+
+    var body: some View {
+        if isLoading {
+            ProgressView("加载中...")
+        } else if let error = errorMessage {
+            Text(error)
+                .foregroundColor(.red)
+                .padding()
+        } else {
+            List(selection: $selectionGenre) {
+                ForEach(genres) { genre in
+                    Text(genre.name)
+                        .tag(genre)
                 }
             }
+            .navigationTitle("选择分类")
         }
     }
 }
+
+
 

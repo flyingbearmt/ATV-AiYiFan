@@ -22,6 +22,8 @@ struct ATV_AiYiFanApp: App {
             
         // }
 
-        GalleryView()
+        WindowGroup {
+            GalleryView()
+        }
     }
 }
