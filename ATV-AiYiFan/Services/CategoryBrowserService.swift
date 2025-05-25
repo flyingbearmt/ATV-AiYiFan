@@ -67,13 +67,17 @@ struct CategoryBrowserItem: Codable {
 }
 
 class CategoryBrowserService {
-    
+
     static let shared = CategoryBrowserService()
     private init() {}
-    
-    func fetchCategoryItems(forPath path: String, completion: @escaping (Result<[CategoryBrowserItem], Error>) -> Void) {
+
+    func fetchCategoryItems(
+        forPath path: String,
+        completion: @escaping (Result<[CategoryBrowserItem], Error>) -> Void
+    ) {
         // Construct the URL based on the path (you may need to adjust this for your API)
-        let urlString = "https://m10.yfsp.tv/v3/list/videoList?cinema=1&cid=\(path)&cacheable=1"
+        let urlString =
+            "https://m10.yfsp.tv/v3/list/videoList?cinema=1&cid=\(path)&cacheable=1"
         guard let url = URL(string: urlString) else {
             completion(.failure(NSError(domain: "Invalid URL", code: -1)))
             return
@@ -88,7 +92,10 @@ class CategoryBrowserService {
                 return
             }
             do {
-                let decoded = try JSONDecoder().decode(CategoryBrowserResponse.self, from: data)
+                let decoded = try JSONDecoder().decode(
+                    CategoryBrowserResponse.self,
+                    from: data
+                )
                 let items = decoded.data?.info?.flatMap { $0.result } ?? []
                 completion(.success(items))
             } catch {

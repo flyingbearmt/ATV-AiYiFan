@@ -5,19 +5,20 @@ class MovieListViewModel: ObservableObject {
     @Published var movies: [CategoryBrowserItem] = []
     @Published var isLoading = false
     @Published var errorMessage: String?
-    
+
     private let categoryBrowserService: CategoryBrowserService
-    
+
     init(categoryBrowserService: CategoryBrowserService = .shared) {
         self.categoryBrowserService = categoryBrowserService
     }
-    
+
     func loadMovies(forGenre genre: GenreItem) {
         let path = genre.path
-        
+
         isLoading = true
         errorMessage = nil
-        categoryBrowserService.fetchCategoryItems(forPath: path) { [weak self] result in
+        categoryBrowserService.fetchCategoryItems(forPath: path) {
+            [weak self] result in
             DispatchQueue.main.async {
                 self?.isLoading = false
                 switch result {

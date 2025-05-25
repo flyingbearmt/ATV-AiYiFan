@@ -93,17 +93,22 @@ struct Clarity: Codable {
 class PlayURLService {
     static let shared = PlayURLService()
     private init() {}
-    
+
     func fetchPlayURL(for id: String) async throws -> PlayURLInfo? {
-        let urlString = "https://m10.yfsp.tv/v3/video/play?cinema=1&id=\(id)&a=1&lang=none&usersign=1&region=US&device=1&isMasterSupport=1&vv=04f3ebf5a703f2715db1dd2cc5792484&pub=CJSqDpWtCparC2utEJTVLLDVDZWkCJarBZ4oE2upCLySCJAR6fWn73CQifYQCPeo734o6viO732QcHcQ6HWQ6QzPZ4oOpHaOp8oOp8vC3OrOMHZP68mP65YC3TZDcPYOc2"
+        let urlString =
+            "https://m10.yfsp.tv/v3/video/play?cinema=1&id=\(id)&a=1&lang=none&usersign=1&region=US&device=1&isMasterSupport=1&vv=04f3ebf5a703f2715db1dd2cc5792484&pub=CJSqDpWtCparC2utEJTVLLDVDZWkCJarBZ4oE2upCLySCJAR6fWn73CQifYQCPeo734o6viO732QcHcQ6HWQ6QzPZ4oOpHaOp8oOp8vC3OrOMHZP68mP65YC3TZDcPYOc2"
         guard let url = URL(string: urlString) else { return nil }
         let (data, _) = try await URLSession.shared.data(from: url)
         let decoded = try JSONDecoder().decode(PlayURLResponse.self, from: data)
         return decoded.data?.info?.first
     }
-    
-    func fetchPlayURL(for id: String, completion: @escaping (Result<PlayURLInfo?, Error>) -> Void) {
-        let urlString = "https://m10.yfsp.tv/v3/video/play?cinema=1&id=\(id)&a=1&lang=none&usersign=1&region=US&device=1&isMasterSupport=1&vv=04f3ebf5a703f2715db1dd2cc5792484&pub=CJSqDpWtCparC2utEJTVLLDVDZWkCJarBZ4oE2upCLySCJAR6fWn73CQifYQCPeo734o6viO732QcHcQ6HWQ6QzPZ4oOpHaOp8oOp8vC3OrOMHZP68mP65YC3TZDcPYOc2"
+
+    func fetchPlayURL(
+        for id: String,
+        completion: @escaping (Result<PlayURLInfo?, Error>) -> Void
+    ) {
+        let urlString =
+            "https://m10.yfsp.tv/v3/video/play?cinema=1&id=\(id)&a=1&lang=none&usersign=1&region=US&device=1&isMasterSupport=1&vv=04f3ebf5a703f2715db1dd2cc5792484&pub=CJSqDpWtCparC2utEJTVLLDVDZWkCJarBZ4oE2upCLySCJAR6fWn73CQifYQCPeo734o6viO732QcHcQ6HWQ6QzPZ4oOpHaOp8oOp8vC3OrOMHZP68mP65YC3TZDcPYOc2"
         guard let url = URL(string: urlString) else {
             completion(.success(nil))
             return
@@ -118,7 +123,10 @@ class PlayURLService {
                 return
             }
             do {
-                let decoded = try JSONDecoder().decode(PlayURLResponse.self, from: data)
+                let decoded = try JSONDecoder().decode(
+                    PlayURLResponse.self,
+                    from: data
+                )
                 completion(.success(decoded.data?.info?.first))
             } catch {
                 completion(.failure(error))

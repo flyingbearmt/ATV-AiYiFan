@@ -1,5 +1,5 @@
-import SwiftUI
 import AVKit
+import SwiftUI
 
 struct PlayerView: View {
     let key: String
@@ -58,13 +58,19 @@ struct PlayerView: View {
                     var playURL: String? = nil
                     if let clarities = playInfo?.clarity {
                         // 1. Find the clarity with description == "auto"
-                        if let autoClarity = clarities.first(where: { $0.description == "auto" }) {
+                        if let autoClarity = clarities.first(where: {
+                            $0.description == "auto"
+                        }) {
                             playURL = autoClarity.path?.rtmp
                         }
                         // 2. If not found, find the highest bitrate with a valid path
                         if playURL == nil {
-                            let sorted = clarities.sorted { ($0.bitrate ?? 0) > ($1.bitrate ?? 0) }
-                            if let best = sorted.first(where: { ($0.path?.rtmp?.isEmpty == false) }) {
+                            let sorted = clarities.sorted {
+                                ($0.bitrate ?? 0) > ($1.bitrate ?? 0)
+                            }
+                            if let best = sorted.first(where: {
+                                ($0.path?.rtmp?.isEmpty == false)
+                            }) {
                                 playURL = best.path?.rtmp
                             }
                         }
@@ -73,7 +79,9 @@ struct PlayerView: View {
                             playURL = clarities.first?.path?.rtmp
                         }
                     }
-                    if let urlString = playURL, let url = URL(string: urlString), !urlString.isEmpty {
+                    if let urlString = playURL,
+                        let url = URL(string: urlString), !urlString.isEmpty
+                    {
                         print("[PlayerView] Playing URL: \(urlString)")
                         let avPlayer = AVPlayer(url: url)
                         player = avPlayer

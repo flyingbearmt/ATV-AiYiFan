@@ -32,7 +32,7 @@ struct VideoDetail: Codable, Identifiable {
     let favoriteCount: Int?
     let filterGold: Int?
 
-// this will be the id to get the play url
+    // this will be the id to get the play url
     let key: String?
     let cid: String?
     let commentStatus: Int?
@@ -99,18 +99,26 @@ struct ExtraListItem: Codable {
 class DetailService {
     static let shared = DetailService()
     private init() {}
-    
+
     func fetchDetail(id: String) async throws -> VideoDetail? {
-        let urlString = "https://m10.yfsp.tv/v3/video/detail?cinema=1&device=1&player=CkPlayer&tech=HLS&country=HU&lang=cns&v=1&id=\(id)&region=US&vv=a3bde195a4b819f6d6cfd5ed5322b577&pub=CJSqDpWtCparC2utEJTVLLDVDZWkCJarBZ4oE2upCLySCJAR6fWn73CQifYQCPeo734o6viO732QcHcQ6HWQ6QzPZ4oOpHaOp8oOp8vC3OrOMHZP68mP65YC3TZDcPYOc2"
+        let urlString =
+            "https://m10.yfsp.tv/v3/video/detail?cinema=1&device=1&player=CkPlayer&tech=HLS&country=HU&lang=cns&v=1&id=\(id)&region=US&vv=a3bde195a4b819f6d6cfd5ed5322b577&pub=CJSqDpWtCparC2utEJTVLLDVDZWkCJarBZ4oE2upCLySCJAR6fWn73CQifYQCPeo734o6viO732QcHcQ6HWQ6QzPZ4oOpHaOp8oOp8vC3OrOMHZP68mP65YC3TZDcPYOc2"
         guard let url = URL(string: urlString) else { return nil }
         let (data, _) = try await URLSession.shared.data(from: url)
-        let decoded = try JSONDecoder().decode(VideoDetailResponse.self, from: data)
+        let decoded = try JSONDecoder().decode(
+            VideoDetailResponse.self,
+            from: data
+        )
         return decoded.data?.info?.first
     }
-    
+
     // For non-async/await usage:
-    func fetchDetail(id: String, completion: @escaping (Result<VideoDetail?, Error>) -> Void) {
-        let urlString = "https://m10.yfsp.tv/v3/video/detail?cinema=1&device=1&player=CkPlayer&tech=HLS&country=HU&lang=cns&v=1&id=\(id)&region=US&vv=a3bde195a4b819f6d6cfd5ed5322b577&pub=CJSqDpWtCparC2utEJTVLLDVDZWkCJarBZ4oE2upCLySCJAR6fWn73CQifYQCPeo734o6viO732QcHcQ6HWQ6QzPZ4oOpHaOp8oOp8vC3OrOMHZP68mP65YC3TZDcPYOc2"
+    func fetchDetail(
+        id: String,
+        completion: @escaping (Result<VideoDetail?, Error>) -> Void
+    ) {
+        let urlString =
+            "https://m10.yfsp.tv/v3/video/detail?cinema=1&device=1&player=CkPlayer&tech=HLS&country=HU&lang=cns&v=1&id=\(id)&region=US&vv=a3bde195a4b819f6d6cfd5ed5322b577&pub=CJSqDpWtCparC2utEJTVLLDVDZWkCJarBZ4oE2upCLySCJAR6fWn73CQifYQCPeo734o6viO732QcHcQ6HWQ6QzPZ4oOpHaOp8oOp8vC3OrOMHZP68mP65YC3TZDcPYOc2"
         guard let url = URL(string: urlString) else {
             completion(.success(nil))
             return
@@ -125,7 +133,10 @@ class DetailService {
                 return
             }
             do {
-                let decoded = try JSONDecoder().decode(VideoDetailResponse.self, from: data)
+                let decoded = try JSONDecoder().decode(
+                    VideoDetailResponse.self,
+                    from: data
+                )
                 completion(.success(decoded.data?.info?.first))
             } catch {
                 completion(.failure(error))

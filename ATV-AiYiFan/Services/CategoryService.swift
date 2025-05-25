@@ -29,9 +29,12 @@ struct CategoryItem: Codable {
 class CategoryService {
     static let shared = CategoryService()
     private init() {}
-    
-    func fetchCategories(completion: @escaping (Result<[CategoryItem], Error>) -> Void) {
-        let urlString = "https://m10.yfsp.tv/v3/list/mainMenuv2?cinema=1&cid=0,1,3&cacheable=1"
+
+    func fetchCategories(
+        completion: @escaping (Result<[CategoryItem], Error>) -> Void
+    ) {
+        let urlString =
+            "https://m10.yfsp.tv/v3/list/mainMenuv2?cinema=1&cid=0,1,3&cacheable=1"
         guard let url = URL(string: urlString) else {
             completion(.failure(NSError(domain: "Invalid URL", code: -1)))
             return
@@ -46,7 +49,10 @@ class CategoryService {
                 return
             }
             do {
-                let decoded = try JSONDecoder().decode(CategoryResponse.self, from: data)
+                let decoded = try JSONDecoder().decode(
+                    CategoryResponse.self,
+                    from: data
+                )
                 let categories = decoded.data?.info ?? []
                 completion(.success(categories))
             } catch {
