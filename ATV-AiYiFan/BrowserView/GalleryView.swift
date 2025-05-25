@@ -62,10 +62,6 @@ struct GalleryView: View {
             }
         } .onAppear {
             // Only inject mock data for DEBUG/testing
-            groupVM.groups = [
-                Group(id: "movie", name: "电影"),
-                Group(id: "tv", name: "电视剧")
-            ]
             genreVM.genres = [
                 GenreItem(id: "0,1,3,19", name: "喜剧", path: "/list/movie-19"),
                 GenreItem(id: "0,1,3,21", name: "动作", path: "/list/movie-21")
@@ -80,21 +76,6 @@ struct GalleryView: View {
         }
         .navigationTitle("分类 (Categories)")
     }
-    
-//    private func fetchCatefories(){
-//        CategoryService.shared.fetchCategories { result in
-//            DispatchQueue.main.async {
-//                switch result {
-//                case .success(let items):
-//                    self.categories = items
-//                    self.isLoading = false
-//                case .failure(let error):
-//                    self.errorMessage = "加载失败: \(error.localizedDescription)"
-//                    self.isLoading = false
-//                }
-//            }
-//        }
-//    }
 }
 
 struct SideGroupView: View {
@@ -104,38 +85,12 @@ struct SideGroupView: View {
     var body: some View {
         List(selection: $selection) {
             ForEach(groups) { group in
-                Text(group.name)
-                    .tag(group)
+                NavigationLink(value: group.name) {
+                    Label(group.name, systemImage: group.imageTag)
+                }
             }
         }
         .navigationTitle("分类")
-    }
-}
-
-
-struct GenreView: View {
-    @Binding var selectionGroup: Group?
-    let genres: [GenreItem]
-    @Binding var selectionGenre: GenreItem?
-    let isLoading: Bool
-    let errorMessage: String?
-
-    var body: some View {
-        if isLoading {
-            ProgressView("加载中...")
-        } else if let error = errorMessage {
-            Text(error)
-                .foregroundColor(.red)
-                .padding()
-        } else {
-            List(selection: $selectionGenre) {
-                ForEach(genres) { genre in
-                    Text(genre.name)
-                        .tag(genre)
-                }
-            }
-            .navigationTitle("选择分类")
-        }
     }
 }
 

@@ -15,14 +15,14 @@ class GenreListViewModel: ObservableObject {
     func loadGenres(forGroup group: Group) {
         isLoading = true
         errorMessage = nil
-        categoryService.fetchCategories { [weak self] result in
+        categoryService.fetchCategories { result in
             DispatchQueue.main.async {
-                self?.isLoading = false
+                self.isLoading = false
                 switch result {
                 case .success(let items):
-                    self?.genres = items.map { GenreItem(id: $0.path, name: $0.label, path: $0.path) }
+                    self.genres = items.map { GenreItem(id: $0.path, name: $0.label, path: $0.path) }
                 case .failure(let error):
-                    self?.errorMessage = error.localizedDescription
+                     self.errorMessage = "加载失败: \(error.localizedDescription)"
                 }
             }
         }
