@@ -94,15 +94,6 @@ class PlayURLService {
     static let shared = PlayURLService()
     private init() {}
 
-    func fetchPlayURL(for id: String) async throws -> PlayURLInfo? {
-        let urlString =
-            "https://m10.yfsp.tv/v3/video/play?cinema=1&id=\(id)&a=1&lang=none&usersign=1&region=US&device=1&isMasterSupport=1"
-        guard let url = URL(string: urlString) else { return nil }
-        let (data, _) = try await URLSession.shared.data(from: url)
-        let decoded = try JSONDecoder().decode(PlayURLResponse.self, from: data)
-        return decoded.data?.info?.first
-    }
-
     func fetchPlayURL(
         for id: String,
         completion: @escaping (Result<PlayURLInfo?, Error>) -> Void

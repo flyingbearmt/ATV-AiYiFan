@@ -77,12 +77,10 @@ class CategoryBrowserService {
     ) {
         let querySting =
             "cinema=1&page=1&size=36&orderby=0&desc=1&cid=\(path)&isserial=-1&isIndex=-1&isfree=-1"
-        debugPrint(querySting)
         let urlString = ServiceConstants().getQueryUrl(
             queryParamString: querySting,
             basePathType : "search"
         )
-        debugPrint(urlString)
         guard let url = URL(string: urlString) else {
             completion(.failure(NSError(domain: "Invalid URL", code: -1)))
             return

@@ -1,8 +1,7 @@
 import SwiftUI
 
 struct MovieListView: View {
-    @StateObject private var movieVM = MovieListViewModel()
-    @Binding var selectedGroup: Group?
+    @ObservedObject var movieVM: MovieListViewModel
     @Binding var selectionGenre: GenreItem?
 
     // Adjust columns as needed for your UI
@@ -46,8 +45,7 @@ struct MovieListView: View {
             if let genre = newGenre {
                 movieVM.loadMovies(forGenre: genre)
             }
-        }
-        .onAppear {
+        }.onAppear {
             if let genre = selectionGenre {
                 movieVM.loadMovies(forGenre: genre)
             }

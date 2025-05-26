@@ -39,7 +39,6 @@ class CategoryService {
             queryParamString: querySting,
             basePathType: "genres"
         )
-        debugPrint(urlString)
         guard let url = URL(string: urlString) else {
             completion(.failure(NSError(domain: "Invalid URL", code: -1)))
             return

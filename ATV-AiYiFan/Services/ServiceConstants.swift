@@ -24,7 +24,6 @@ struct ServiceConstants{
         queryPath:String,
     ) -> String {
         let lowercasedQuery = queryPath.lowercased()
-        debugPrint(lowercasedQuery)
         let baseString = "\(publickey)&\(lowercasedQuery)&\(privatekey)"
         let digest = Insecure.MD5.hash(data: Data(baseString.utf8))
         return digest.map { String(format: "%02hhx", $0) }.joined()

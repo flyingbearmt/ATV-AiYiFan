@@ -23,7 +23,6 @@ class MovieListViewModel: ObservableObject {
                 self?.isLoading = false
                 switch result {
                 case .success(let items):
-                    debugPrint(items.count)
                     self?.movies = items
                 case .failure(let error):
                     self?.errorMessage = error.localizedDescription
@@ -31,9 +30,4 @@ class MovieListViewModel: ObservableObject {
             }
         }
     }
-}
-
-struct MovieItem: Identifiable, Hashable {
-    let id: String
-    let name: String
 }

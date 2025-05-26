@@ -3,9 +3,11 @@ import SwiftUI
 struct GalleryView: View {
     @StateObject private var groupVM = GroupListViewModel()
     @StateObject private var genreVM = GenreListViewModel()
+    @StateObject private var movieListVM = MovieListViewModel()
 
     @State private var selectedGroup: Group?
     @State private var selectedGenre: GenreItem?
+    @State private var navPath = NavigationPath()
 
     var body: some View {
         NavigationSplitView {
@@ -23,30 +25,37 @@ struct GalleryView: View {
                     isLoading: genreVM.isLoading,
                     errorMessage: genreVM.errorMessage
                 )
-
             } else {
                 Text("请选择分组")
                     .foregroundColor(.secondary)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-
             }
         } detail: {
-            MovieListView(
-                selectedGroup: $selectedGroup,
-                selectionGenre: $selectedGenre,
-            )
-        }.navigationSplitViewStyle(.balanced)
-            .onChange(of: selectedGroup) { oldGroup, newGroup in
-                print(
-                    "[DEBUG] selectedGroup changed from \(String(describing: oldGroup)) to \(String(describing: newGroup))"
-                )
-                if let group = newGroup {
-                    genreVM.loadGenres(forGroup: group)
-                    selectedGenre = nil
-                    genreVM.isLoading = false
+            NavigationStack(path: $navPath) {
+                if let genre = selectedGenre {
+                    MovieListView(
+                        movieVM: movieListVM,
+                        selectionGenre: $selectedGenre,
+                    )
+                } else {
+                    Text("请选择分组")
+                        .foregroundColor(.secondary)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
             }
-            .navigationTitle("分类 (Categories)")
+        }
+        .navigationSplitViewStyle(.balanced)
+        .onChange(of: selectedGroup) { oldGroup, newGroup in
+            if let group = newGroup {
+                genreVM.loadGenres(forGroup: group)
+                selectedGenre = nil
+                genreVM.isLoading = false
+            }
+        }
+        .onChange(of: selectedGenre) { oldGenre, newGenre in
+            navPath = NavigationPath()
+        }
+        .navigationTitle("分类 (Categories)")
     }
 }
 
@@ -57,8 +66,10 @@ struct SideGroupView: View {
     var body: some View {
         List(selection: $selection) {
             ForEach(groups) { group in
-                Label(group.name, systemImage: group.imageTag)
-                    .tag(group)
+                NavigationLink(value: group) {
+                    Label(group.name, systemImage: group.imageTag)
+                        .tag(group)
+                }
             }
         }
         .navigationTitle("板块分类")
