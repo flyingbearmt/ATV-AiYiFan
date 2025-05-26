@@ -11,18 +11,12 @@ struct VideoDetailView: View {
             } else if let errorMessage = viewModel.errorMessage {
                 Text(errorMessage)
                     .foregroundColor(.red)
-            } else if let detail = viewModel.videoDetail, let playKey = detail.key {
-                NavigationStack {
-                    NavigationLink(
-                        destination: PlayerView(key: playKey),
-                        label: {
-                            Text("Start to Play")
-                                .font(.title2)
-                                .padding()
-                                .focusable(true)
-                        }
-                    )
-                    
+            } else if let detail = viewModel.videoDetail,
+                let playKey = detail.key
+            {
+                NavigationLink(
+                    destination: PlayerView(key: playKey)
+                ) {
                     Text(detail.title)
                         .font(.largeTitle)
                         .padding(.top, 16)

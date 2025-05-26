@@ -75,7 +75,6 @@ class CategoryBrowserService {
         forPath path: String,
         completion: @escaping (Result<[CategoryBrowserItem], Error>) -> Void
     ) {
-        // Construct the URL based on the path (you may need to adjust this for your API)
         let querySting =
             "cinema=1&page=1&size=36&orderby=0&desc=1&cid=\(path)&isserial=-1&isIndex=-1&isfree=-1"
         debugPrint(querySting)
