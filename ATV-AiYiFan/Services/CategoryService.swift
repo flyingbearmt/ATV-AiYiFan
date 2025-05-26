@@ -33,8 +33,13 @@ class CategoryService {
         groupId: String,
         completion: @escaping (Result<[GenreAPIItem], Error>) -> Void
     ) {
-        let urlString =
-        "https://m10.yfsp.tv/api/list/AllVideoType?cinema=1&cid=\(groupId)&vv=b71b72a00fdebb6c2ea52968f14b49aa&pub=CJSqDpatCZOpE2usDbyggQzDZWkCJarBZ4oE2upCLyQc1gn6x6R7B6ScnmQ634QiHmOCp2Sc1aQcHcPiR6OiAzPc9bPM4sDZOnDc5bDpOmPJLZEMCmOpanOcOrCJWsC30"
+        let querySting = "cinema=1&cid=\(groupId)"
+        
+        let urlString = ServiceConstants().getQueryUrl(
+            querySubPath: "AllVideoType?",
+            queryParamString: querySting
+        )
+        debugPrint(urlString)
         guard let url = URL(string: urlString) else {
             completion(.failure(NSError(domain: "Invalid URL", code: -1)))
             return

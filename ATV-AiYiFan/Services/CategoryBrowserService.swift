@@ -1,5 +1,4 @@
 import Foundation
-import CryptoKit
 
 struct CategoryBrowserResponse: Codable {
     let ret: Int
@@ -71,16 +70,19 @@ class CategoryBrowserService {
 
     static let shared = CategoryBrowserService()
     private init() {}
-    
-    
+
     func fetchCategoryItems(
         forPath path: String,
         completion: @escaping (Result<[CategoryBrowserItem], Error>) -> Void
     ) {
         // Construct the URL based on the path (you may need to adjust this for your API)
-        let querySting = "cinema=1&page=1&size=36&orderby=0&desc=1&cid=\(path)&isserial=-1&isIndex=-1&isfree=-1"
+        let querySting =
+            "cinema=1&page=1&size=36&orderby=0&desc=1&cid=\(path)&isserial=-1&isIndex=-1&isfree=-1"
         debugPrint(querySting)
-        let urlString = getQueryUrl(queryPath: querySting)
+        let urlString = ServiceConstants().getQueryUrl(
+            querySubPath: "Search?",
+            queryParamString: querySting
+        )
         debugPrint(urlString)
         guard let url = URL(string: urlString) else {
             completion(.failure(NSError(domain: "Invalid URL", code: -1)))
@@ -106,26 +108,5 @@ class CategoryBrowserService {
                 completion(.failure(error))
             }
         }.resume()
-    }
-    
-    private func getmd5(
-        queryPath:String,
-    ) -> String {
-        let lowercasedQuery = queryPath.lowercased()
-        debugPrint(lowercasedQuery)
-        let baseString = "\(Constants().publickey)&\(lowercasedQuery)&\(Constants().privatekey)"
-        let digest = Insecure.MD5.hash(data: Data(baseString.utf8))
-        return digest.map { String(format: "%02hhx", $0) }.joined()
-    }
-    
-    private func getQueryUrl(
-        queryPath : String
-    ) -> String{
-        var sourceUrl = ""
-        sourceUrl+=Constants().baseUrl
-        sourceUrl+="Search?\(queryPath)"
-        sourceUrl+="&vv=\(getmd5(queryPath: queryPath))"
-        sourceUrl+="&pub=\(Constants().publickey)"
-        return sourceUrl
     }
 }
