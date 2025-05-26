@@ -1,22 +1,17 @@
 import SwiftUI
-import AVKit
 
 struct VideoDetailView: View {
     let videoId: String
-    @State private var videoDetail: VideoDetail? = nil
-    @State private var isLoading = false
-    @State private var errorMessage: String? = nil
-    @State private var navigateToPlayer = false
-    @FocusState private var isPlayButtonFocused: Bool
+    @StateObject private var viewModel = VideoDetailViewModel()
 
     var body: some View {
         VStack(spacing: 32) {
-            if isLoading {
+            if viewModel.isLoading {
                 ProgressView("加载播放信息中... (Loading play info...)")
-            } else if let errorMessage = errorMessage {
+            } else if let errorMessage = viewModel.errorMessage {
                 Text(errorMessage)
                     .foregroundColor(.red)
-            } else if let detail = videoDetail, let playKey = detail.key, !playKey.isEmpty {
+            } else if let detail = viewModel.videoDetail, let playKey = detail.key {
                 NavigationStack {
                     NavigationLink(
                         destination: PlayerView(key: playKey),
@@ -32,7 +27,7 @@ struct VideoDetailView: View {
                         .font(.largeTitle)
                         .padding(.top, 16)
                 }
-            } else if let detail = videoDetail {
+            } else if let detail = viewModel.videoDetail {
                 Text("无法获取播放Key (No play key found)")
                     .foregroundColor(.secondary)
                 Text(detail.title)
@@ -45,29 +40,9 @@ struct VideoDetailView: View {
             Spacer()
         }
         .onAppear {
-            fetchDetail()
+            viewModel.loadVideoDetail(videoId: videoId)
         }
         .padding()
-        .navigationTitle(videoDetail?.title ?? "Video")
-    }
-
-    private func fetchDetail() {
-        isLoading = true
-        errorMessage = nil
-        DetailService.shared.fetchDetail(id: videoId) { result in
-            DispatchQueue.main.async {
-                isLoading = false
-                switch result {
-                case .success(let info):
-                    if let info = info {
-                        videoDetail = info
-                    } else {
-                        errorMessage = "未找到播放信息 (No play info found)"
-                    }
-                case .failure(let error):
-                    errorMessage = "加载失败: \(error.localizedDescription)"
-                }
-            }
-        }
+        .navigationTitle(viewModel.videoDetail?.title ?? "Video")
     }
 }

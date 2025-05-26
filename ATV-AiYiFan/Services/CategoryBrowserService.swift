@@ -80,8 +80,8 @@ class CategoryBrowserService {
             "cinema=1&page=1&size=36&orderby=0&desc=1&cid=\(path)&isserial=-1&isIndex=-1&isfree=-1"
         debugPrint(querySting)
         let urlString = ServiceConstants().getQueryUrl(
-            querySubPath: "Search?",
-            queryParamString: querySting
+            queryParamString: querySting,
+            basePathType : "search"
         )
         debugPrint(urlString)
         guard let url = URL(string: urlString) else {

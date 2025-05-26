@@ -36,8 +36,8 @@ class CategoryService {
         let querySting = "cinema=1&cid=\(groupId)"
         
         let urlString = ServiceConstants().getQueryUrl(
-            querySubPath: "AllVideoType?",
-            queryParamString: querySting
+            queryParamString: querySting,
+            basePathType: "genres"
         )
         debugPrint(urlString)
         guard let url = URL(string: urlString) else {

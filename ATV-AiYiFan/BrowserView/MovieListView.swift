@@ -4,8 +4,16 @@ struct MovieListView: View {
     @ObservedObject var movieVM: MovieListViewModel
     var selectedGenre: GenreItem?
 
+    // Adjust columns as needed for your UI
+    let columns = [
+        GridItem(.flexible(), spacing: 16),
+        GridItem(.flexible(), spacing: 16),
+        GridItem(.flexible(), spacing: 16),
+        GridItem(.flexible(), spacing: 16)
+    ]
+
     var body: some View {
-        VStack {
+        ScrollView {
             if movieVM.isLoading {
                 ProgressView("加载影片中...")
             } else if let error = movieVM.errorMessage {
@@ -16,25 +24,62 @@ struct MovieListView: View {
                 Text("暂无影片")
                     .foregroundColor(.secondary)
             } else {
-                List(movieVM.movies, id: \.key) { movie in
-                    HStack {
-                        Text(movie.title ?? "无标题")
-                            .font(.headline)
-                        Spacer()
-                        Text(movie.regional ?? "")
-                            .font(.subheadline)
-                            .foregroundColor(.secondary)
-                        // Add more columns as needed
+                LazyVGrid(columns: columns, spacing: 24) {
+                    ForEach(movieVM.movies, id: \.key) { movie in
+                        NavigationLink(destination: VideoDetailView(videoId: movie.key ?? "")) {
+                            VStack(alignment: .leading, spacing: 8) {
+                                // Poster
+                                AsyncImage(url: URL(string: movie.image ?? "")) { image in
+                                    image
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fill)
+                                        .frame(width: 160, height: 220)
+                                        .clipped()
+                                        .cornerRadius(8)
+                                } placeholder: {
+                                    Rectangle()
+                                        .fill(Color.gray.opacity(0.3))
+                                        .frame(width: 160, height: 220)
+                                        .cornerRadius(8)
+                                }
+
+                                // Title
+                                Text(movie.title ?? "无标题")
+                                    .font(.headline)
+                                    .lineLimit(1)
+
+                                // Subtitle (e.g., genre or year)
+                                Text(movie.atypeName ?? "")
+                                    .font(.subheadline)
+                                    .foregroundColor(.secondary)
+                                    .lineLimit(1)
+
+                                // Rating
+                                if let rating = movie.rating {
+                                    Text(rating)
+                                        .font(.caption)
+                                        .foregroundColor(.yellow)
+                                }
+                            }
+                            .padding(.bottom, 8)
+                        }
+                        .buttonStyle(PlainButtonStyle())
                     }
                 }
-                .navigationTitle(selectedGenre?.name ?? "影片")
+                .padding()
             }
         }
-        .onChange(of: selectedGenre) { newGenre in
+        .navigationTitle(selectedGenre?.name ?? "影片")
+        .onChange(of: selectedGenre) {old ,newGenre in
             if let genre = newGenre {
-                debugPrint(genre)
+                movieVM.loadMovies(forGenre: genre)
+            }
+        }
+        .onAppear {
+            if let genre = selectedGenre {
                 movieVM.loadMovies(forGenre: genre)
             }
         }
     }
 }
+

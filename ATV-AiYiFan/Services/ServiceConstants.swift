@@ -8,9 +8,17 @@ import CryptoKit
 import Foundation
 
 struct ServiceConstants{
-    let baseUrl = "https://m10.yfsp.tv/api/list/"
+    let baseUrl = "https://m10.yfsp.tv/"
     let privatekey = "SqE3JSqE34uDZOrCIusE"
     let publickey = "CJSqE34uDZOrCIusELyggQzDZWkCJarBZ4oE2upCLyp71cn6x4PiHcp6foQ6Z6S73CPCPiSCR4p6hAnCXiS6YzDZOtC3OnPJOmP3WrCZPbC30qDZTaOsPcDZCpOp9XOp4"
+    
+    // Add a map for base URLs
+    let basePathMap: [String: String] = [
+        "search": "api/list/Search?",
+        "genres":"api/list/AllVideoType?",
+        "videodetail":"v3/video/detail?",
+        "videoplay":"v3/video/play?"
+    ]
     
     private func getmd5(
         queryPath:String,
@@ -23,15 +31,17 @@ struct ServiceConstants{
     }
     
     func getQueryUrl(
-        querySubPath: String,
-        queryParamString : String
+        queryParamString : String,
+        basePathType: String = "default"
     ) -> String{
+        let chosenBasePAth = basePathMap[basePathType] ?? baseUrl
         var sourceUrl = ""
-        sourceUrl+=baseUrl
-        sourceUrl+=querySubPath
-        sourceUrl+=queryParamString
-        sourceUrl+="&vv=\(getmd5(queryPath: queryParamString))"
-        sourceUrl+="&pub=\(publickey)"
+        sourceUrl += baseUrl
+        sourceUrl += chosenBasePAth
+        sourceUrl += queryParamString
+        sourceUrl += "&vv=\(getmd5(queryPath: queryParamString))"
+        sourceUrl += "&pub=\(publickey)"
         return sourceUrl
     }
 }
+
