@@ -10,20 +10,19 @@ struct CategoryResponse: Codable {
 struct CategoryData: Codable {
     let code: Int
     let msg: String?
-    let info: [CategoryItem]?
+    let info: [GenreAPIItem]?
 }
 
-struct CategoryItem: Codable {
-    let label: String
-    let link: String
-    let notifications: Int
-    let category: String?
-    let external: Bool
-    let params: [String: String]?
+struct GenreAPIItem: Codable {
+    let pid: String
+    let className: String
+    let taxis: Int
+    let isIndex: Bool
     let path: String
-    let isNew: Bool
-    let image: String?
-    let isHot: Bool
+    let altLink: String
+    let contxt: String
+    let postTime: String
+    let id: Int
 }
 
 class CategoryService {
@@ -31,15 +30,16 @@ class CategoryService {
     private init() {}
 
     func fetchCategories(
-        completion: @escaping (Result<[CategoryItem], Error>) -> Void
+        groupId: String,
+        completion: @escaping (Result<[GenreAPIItem], Error>) -> Void
     ) {
         let urlString =
-            "https://m10.yfsp.tv/v3/list/mainMenuv2?cinema=1&cid=0,1,3&cacheable=1"
+        "https://m10.yfsp.tv/api/list/AllVideoType?cinema=1&cid=\(groupId)&vv=b71b72a00fdebb6c2ea52968f14b49aa&pub=CJSqDpatCZOpE2usDbyggQzDZWkCJarBZ4oE2upCLyQc1gn6x6R7B6ScnmQ634QiHmOCp2Sc1aQcHcPiR6OiAzPc9bPM4sDZOnDc5bDpOmPJLZEMCmOpanOcOrCJWsC30"
         guard let url = URL(string: urlString) else {
             completion(.failure(NSError(domain: "Invalid URL", code: -1)))
             return
         }
-        URLSession.shared.dataTask(with: url) { data, response, error in
+        let task = URLSession.shared.dataTask(with: url) { data, response, error in
             if let error = error {
                 completion(.failure(error))
                 return
@@ -49,20 +49,16 @@ class CategoryService {
                 return
             }
             do {
-                let decoded = try JSONDecoder().decode(
-                    CategoryResponse.self,
-                    from: data
-                )
-                let categories = decoded.data?.info ?? []
-                completion(.success(categories))
+                let response = try JSONDecoder().decode(CategoryResponse.self, from: data)
+                if let info = response.data?.info {
+                    completion(.success(info))
+                } else {
+                    completion(.failure(NSError(domain: "No info", code: -3)))
+                }
             } catch {
                 completion(.failure(error))
             }
-        }.resume()
-    }
-
-    // Placeholder for the original fetchVideos method
-    func fetchVideos(completion: @escaping ([VideoItem]) -> Void) {
-        // TODO: Implement real video fetching logic
+        }
+        task.resume()
     }
 }
