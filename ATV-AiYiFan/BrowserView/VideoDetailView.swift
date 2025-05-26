@@ -11,10 +11,11 @@ struct VideoDetailHost: View {
             } else if let errorMessage = viewModel.errorMessage {
                 Text(errorMessage)
                     .foregroundColor(.red)
-            } else if let detail = viewModel.videoDetail
-            {
+            } else if let detail = viewModel.videoDetail {
                 VideoDetailView(
-                    videoDetail: detail
+                    videoDetail: detail,
+                    serial: viewModel.serialList
+
                 )
             } else if let detail = viewModel.videoDetail {
                 Text("无法获取播放Key (No play key found)")
@@ -38,6 +39,7 @@ struct VideoDetailHost: View {
 
 struct VideoDetailView: View {
     let videoDetail: VideoDetailUI
+    let serial: [SerialListItemUI]?
 
     var body: some View {
         ScrollView {
@@ -60,7 +62,7 @@ struct VideoDetailView: View {
 
                 // Title and metadata
                 VStack(alignment: .leading, spacing: 8) {
-                    Text(videoDetail.title ?? "Loading...")
+                    Text(videoDetail.title)
                         .font(.largeTitle)
                         .fontWeight(.bold)
                         .lineLimit(2)
@@ -75,40 +77,17 @@ struct VideoDetailView: View {
                             HStack(spacing: 4) {
                                 Image(systemName: "star.fill")
                                     .foregroundColor(.yellow)
-                                Text(String(format: "%.1f", rating))
+                                Text(rating)
                                     .font(.subheadline)
                             }
                         }
                     }
                     .foregroundColor(.secondary)
-
-                    // Action buttons
-//                    HStack(spacing: 20) {
-//                        Button(action: { /* Play action */  }) {
-//                            HStack {
-//                                Image(systemName: "play.fill")
-//                                Text("Play")
-//                            }
-//                            .padding(.horizontal, 24)
-//                            .padding(.vertical, 12)
-//                            .background(Color.blue)
-//                            .foregroundColor(.white)
-//                            .cornerRadius(8)
-//                        }
-//
-//                        Button(action: { /* Add to list action */  }) {
-//                            Image(systemName: "plus")
-//                                .padding(12)
-//                                .background(Color.gray.opacity(0.3))
-//                                .clipShape(Circle())
-//                        }
-//                    }
-//                    .padding(.top, 8)
-                    if let playKey = videoDetail.playKey{
+                    if let playKey = videoDetail.playKey {
                         NavigationLink(
                             destination: PlayerView(key: playKey)
                         ) {
-                            Text(videoDetail.title)
+                            Text("开始播放")
                                 .font(.largeTitle)
                                 .padding(.top, 16)
                         }
@@ -134,6 +113,31 @@ struct VideoDetailView: View {
             .padding(.horizontal, 40)
             .padding(.bottom, 20)
         }
+
+        // serials
+        if let episodes = serial, !episodes.isEmpty {
+            LazyVStack(alignment: .leading, spacing: 0) {
+                ForEach(episodes) { episode in
+                    Button(action: {
+                        // Handle episode selection
+                    }) {
+                        HStack {
+                            Text(episode.name ?? "Episode \(episode.id)")
+                                .foregroundColor(.primary)
+                            Spacer()
+                            Image(systemName: "play.circle")
+                                .foregroundColor(.blue)
+                                .font(.title2)
+                        }
+                        .padding()
+                        .cornerRadius(8)
+                    }
+                    .padding(.horizontal)
+                    .padding(.vertical, 4)
+                }
+            }
+        }
+
     }
 }
 extension VideoDetailUI {
@@ -148,13 +152,27 @@ extension VideoDetailUI {
         genres: "Action,Adventure,Sci-Fi",
         director: "Jane Smith",
         cast: ["John Doe", "Jane Smith", "Alex Johnson", "Maria Garcia"],
-        playKey: "abc123xyz"
+        playKey: "abc123xyz",
+        isSerial: true,
+        genreKey: "1,3,4",
+        taxis: 0
+    )
+}
+
+extension SerialListItemUI {
+    public static let mockSerialListUI = SerialListItemUI(
+        id: 0,
+        name: "hhhhh",
+        playKey: "1,3,4"
     )
 }
 
 struct VideoDetailView_Previews: PreviewProvider {
 
     static var previews: some View {
-        VideoDetailView(videoDetail: .mockVideoDetail)
+        VideoDetailView(
+            videoDetail: .mockVideoDetail,
+            serial: [.mockSerialListUI]
+        )
     }
 }

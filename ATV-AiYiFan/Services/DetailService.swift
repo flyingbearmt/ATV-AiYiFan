@@ -1,16 +1,16 @@
 import Foundation
 
-struct VideoDetailResponse: Codable {
+struct BaseResponse<T: Codable>: Codable {
     let ret: Int
-    let data: VideoDetailData?
-    let msg: String?
-    let debug: String?
+    let data: BaseData<T>
+    let msg: String
+    let debug: String
 }
 
-struct VideoDetailData: Codable {
+struct BaseData<T: Codable>: Codable {
     let code: Int
-    let msg: String?
-    let info: [VideoDetail]?
+    let msg: String
+    let info: [T]
 }
 
 struct VideoDetail: Codable, Identifiable {
@@ -49,6 +49,7 @@ struct VideoDetail: Codable, Identifiable {
     let regional: String?
     let publishNavKey: String?
     let isMediaTitleVisible: Bool?
+    // here to load serials
     let isSerial: Bool?
     let cidMapper: String?
     let likeStatus: Int?
@@ -96,6 +97,26 @@ struct ExtraListItem: Codable {
     let adLevel: Int?
 }
 
+struct PlayListInfo: Codable {
+    let pageSize: Int
+    let playList: [PlayListItem]
+    let playListType: String
+}
+
+struct PlayListItem: Codable, Identifiable {
+    let id: Int
+    let key: String
+    let name: String
+    let updateDate: String
+    let isBought: Bool
+    let isNew: Bool
+    let imgPath: String?
+    let publishdate: String
+    let sharpness: String?
+    let isLive: Bool
+    let isFix: Bool
+}
+
 class DetailService {
     static let shared = DetailService()
     private init() {}
@@ -105,13 +126,14 @@ class DetailService {
         movieKey: String,
         completion: @escaping (Result<VideoDetail, Error>) -> Void
     ) {
-        let querySting = "cinema=1&device=1&player=CkPlayer&tech=HLS&country=HU&lang=cns&v=1&id=\(movieKey)&region=US"
-        
+        let querySting =
+            "cinema=1&device=1&player=CkPlayer&tech=HLS&country=HU&lang=cns&v=1&id=\(movieKey)&region=US"
+
         let urlString = ServiceConstants().getQueryUrl(
             queryParamString: querySting,
             basePathType: "videodetail"
         )
-        
+
         guard let url = URL(string: urlString) else {
             completion(.failure(NSError(domain: "Invalid URL", code: -1)))
             return
@@ -127,10 +149,50 @@ class DetailService {
             }
             do {
                 let decoded = try JSONDecoder().decode(
-                    VideoDetailResponse.self,
+                    BaseResponse<VideoDetail>.self,
                     from: data
                 )
-                completion(.success((decoded.data?.info?.first)!))
+                completion(.success((decoded.data.info.first)!))
+            } catch {
+                completion(.failure(error))
+            }
+        }.resume()
+    }
+
+    // For non-async/await usage:
+    func fetchSeries(
+        movieKey: String,
+        genreKey: String,
+        taxis: String,
+        completion: @escaping (Result<[PlayListItem], Error>) -> Void
+    ) {
+        let querySting =
+            "cinema=1&vid=\(movieKey)&lsk=1&taxis=\(taxis)&cid=\(genreKey)"
+
+        let urlString = ServiceConstants().getQueryUrl(
+            queryParamString: querySting,
+            basePathType: "seriesList"
+        )
+
+        guard let url = URL(string: urlString) else {
+            completion(.failure(NSError(domain: "Invalid URL", code: -1)))
+            return
+        }
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            guard let data = data else {
+                completion(.failure(NSError(domain: "No data", code: -2)))
+                return
+            }
+            do {
+                let decoded = try JSONDecoder().decode(
+                    BaseResponse<PlayListInfo>.self,
+                    from: data
+                )
+                completion(.success((decoded.data.info.first?.playList)!))
             } catch {
                 completion(.failure(error))
             }

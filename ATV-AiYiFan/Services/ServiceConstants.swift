@@ -17,7 +17,8 @@ struct ServiceConstants{
         "search": "api/list/Search?",
         "genres":"api/list/AllVideoType?",
         "videodetail":"v3/video/detail?",
-        "videoplay":"v3/video/play?"
+        "videoplay":"v3/video/play?",
+        "seriesList":"v3/video/languagesplaylist?"
     ]
     
     private func getmd5(
