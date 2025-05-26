@@ -27,7 +27,7 @@ struct MovieListView: View {
                 LazyVGrid(columns: columns, spacing: 24) {
                     ForEach(movieVM.movies, id: \.key) { movie in
                         NavigationLink(
-                            destination: VideoDetailView(
+                            destination: VideoDetailHost(
                                 videoId: movie.key ?? ""
                             )
                         ) {

@@ -103,7 +103,7 @@ class DetailService {
     // For non-async/await usage:
     func fetchDetail(
         movieKey: String,
-        completion: @escaping (Result<VideoDetail?, Error>) -> Void
+        completion: @escaping (Result<VideoDetail, Error>) -> Void
     ) {
         let querySting = "cinema=1&device=1&player=CkPlayer&tech=HLS&country=HU&lang=cns&v=1&id=\(movieKey)&region=US"
         
@@ -113,7 +113,7 @@ class DetailService {
         )
         
         guard let url = URL(string: urlString) else {
-            completion(.success(nil))
+            completion(.failure(NSError(domain: "Invalid URL", code: -1)))
             return
         }
         URLSession.shared.dataTask(with: url) { data, response, error in
@@ -122,7 +122,7 @@ class DetailService {
                 return
             }
             guard let data = data else {
-                completion(.success(nil))
+                completion(.failure(NSError(domain: "No data", code: -2)))
                 return
             }
             do {
@@ -130,7 +130,7 @@ class DetailService {
                     VideoDetailResponse.self,
                     from: data
                 )
-                completion(.success(decoded.data?.info?.first))
+                completion(.success((decoded.data?.info?.first)!))
             } catch {
                 completion(.failure(error))
             }
