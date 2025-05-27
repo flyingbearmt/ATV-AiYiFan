@@ -3,6 +3,8 @@ import SwiftUI
 
 struct PlayerView: View {
     let key: String
+    // init play = 1, following play = 0
+    let autoplay:Int
     @State private var player: AVPlayer? = nil
     @State private var errorMessage: String? = nil
     @State private var isLoading = false
@@ -50,7 +52,7 @@ struct PlayerView: View {
     private func fetchPlayURL() {
         isLoading = true
         errorMessage = nil
-        PlayURLService.shared.fetchPlayURL(for: key) { result in
+        PlayURLService.shared.fetchPlayURL(for: key, autoplay: autoplay) { result in
             DispatchQueue.main.async {
                 isLoading = false
                 switch result {

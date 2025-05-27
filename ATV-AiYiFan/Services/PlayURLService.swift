@@ -96,15 +96,15 @@ class PlayURLService {
 
     func fetchPlayURL(
         for id: String,
+        autoplay:Int,
         completion: @escaping (Result<PlayURLInfo?, Error>) -> Void
     ) {
-        let querySting = "cinema=1&id=\(id)&a=1&lang=none&usersign=1&region=US&device=1&isMasterSupport=1"
+        let querySting = "cinema=1&id=\(id)&a=\(autoplay)&lang=none&usersign=1&region=US&device=1&isMasterSupport=1"
         
         let urlString = ServiceConstants().getQueryUrl(
             queryParamString: querySting,
             basePathType: "videoplay"
         )
-        
         guard let url = URL(string: urlString) else {
             completion(.success(nil))
             return

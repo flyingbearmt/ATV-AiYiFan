@@ -1,18 +1,5 @@
 import Foundation
 
-struct BaseResponse<T: Codable>: Codable {
-    let ret: Int
-    let data: BaseData<T>
-    let msg: String
-    let debug: String
-}
-
-struct BaseData<T: Codable>: Codable {
-    let code: Int
-    let msg: String
-    let info: [T]
-}
-
 struct VideoDetail: Codable, Identifiable {
     let id: Int
     let title: String
@@ -163,12 +150,12 @@ class DetailService {
     func fetchSeries(
         movieKey: String,
         genreKey: String,
-        taxis: String,
         completion: @escaping (Result<[PlayListItem], Error>) -> Void
     ) {
         let querySting =
-            "cinema=1&vid=\(movieKey)&lsk=1&taxis=\(taxis)&cid=\(genreKey)"
+            "cinema=1&vid=\(movieKey)&lsk=1&taxis=1&cid=\(genreKey)"
 
+        debugPrint("load serials: \(querySting)")
         let urlString = ServiceConstants().getQueryUrl(
             queryParamString: querySting,
             basePathType: "seriesList"

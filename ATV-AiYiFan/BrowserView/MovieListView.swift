@@ -28,7 +28,8 @@ struct MovieListView: View {
                     ForEach(movieVM.movies, id: \.key) { movie in
                         NavigationLink(
                             destination: VideoDetailHost(
-                                videoId: movie.key ?? ""
+                                videoId: movie.key ?? "",
+                                genreId: movie.videoClassID ?? ""
                             )
                         ) {
                             MovieThumnail(movie: movie)

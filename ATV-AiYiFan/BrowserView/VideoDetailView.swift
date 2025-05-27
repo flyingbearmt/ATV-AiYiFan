@@ -2,6 +2,7 @@ import SwiftUI
 
 struct VideoDetailHost: View {
     let videoId: String
+    let genreId: String
     @StateObject private var viewModel = VideoDetailViewModel()
 
     var body: some View {
@@ -31,6 +32,7 @@ struct VideoDetailHost: View {
         }
         .onAppear {
             viewModel.loadVideoDetail(videoId: videoId)
+            viewModel.loadVideoSerials(videoId: videoId, genreKey: genreId)
         }
         .padding()
         .navigationTitle(viewModel.videoDetail?.title ?? "Video")
@@ -42,37 +44,37 @@ struct VideoDetailView: View {
     let serial: [SerialListItemUI]?
 
     var body: some View {
-        ScrollView {
+        VStack(alignment: .leading, spacing: 8){
             // Poster and title overlay
-            HStack(alignment: .bottom, spacing: 20) {
+            HStack(alignment: .top, spacing: 20) {
                 // Poster
                 AsyncImage(url: URL(string: videoDetail.posterURL ?? "")) {
                     image in
                     image
                         .resizable()
                         .aspectRatio(2 / 3, contentMode: .fit)
-                        .frame(height: 220)
+                        .frame(height: 400)
                         .cornerRadius(8)
                         .shadow(radius: 10)
                 } placeholder: {
                     RoundedRectangle(cornerRadius: 8)
                         .fill(Color.gray.opacity(0.3))
-                        .frame(width: 150, height: 220)
+                        .frame(width: 300, height: 400)
                 }
-
+                
                 // Title and metadata
-                VStack(alignment: .leading, spacing: 8) {
+                VStack(alignment: .leading, spacing: 24) {
                     Text(videoDetail.title)
                         .font(.largeTitle)
                         .fontWeight(.bold)
                         .lineLimit(2)
-
+                    
                     HStack(spacing: 16) {
                         if let year = videoDetail.postYear {
                             Text(String(year))
                                 .font(.subheadline)
                         }
-
+                        
                         if let rating = videoDetail.rating {
                             HStack(spacing: 4) {
                                 Image(systemName: "star.fill")
@@ -85,61 +87,64 @@ struct VideoDetailView: View {
                     .foregroundColor(.secondary)
                     if let playKey = videoDetail.playKey {
                         NavigationLink(
-                            destination: PlayerView(key: playKey)
+                            destination: PlayerView(key: playKey, autoplay: 1)
                         ) {
                             Text("开始播放")
                                 .font(.largeTitle)
                                 .padding(.top, 16)
                         }
                     }
-                }
-                .padding(.bottom, 20)
-                .padding(.trailing, 20)
-            }
-            .padding(.horizontal, 40)
-            .padding(.bottom, 20)
-        }
-
-        // Description
-        if let overview = videoDetail.overviewDescription {
-            VStack(alignment: .leading, spacing: 8) {
-                Text("Overview")
-                    .font(.headline)
-                Text(overview)
-                    .font(.body)
-                    .lineSpacing(4)
-                    .fixedSize(horizontal: false, vertical: true)
-            }
-            .padding(.horizontal, 40)
-            .padding(.bottom, 20)
-        }
-
-        // serials
-        if let episodes = serial, !episodes.isEmpty {
-            LazyVStack(alignment: .leading, spacing: 0) {
-                ForEach(episodes) { episode in
-                    Button(action: {
-                        // Handle episode selection
-                    }) {
-                        HStack {
-                            Text(episode.name ?? "Episode \(episode.id)")
-                                .foregroundColor(.primary)
-                            Spacer()
-                            Image(systemName: "play.circle")
-                                .foregroundColor(.blue)
-                                .font(.title2)
+                    
+                    // Description
+                    if let overview = videoDetail.overviewDescription {
+                        VStack(alignment: .leading) {
+                            Text("Overview")
+                                .font(.headline)
+                            Text(overview)
+                                .font(.body)
+                                .lineSpacing(4)
+                                .fixedSize(horizontal: false, vertical: true)
                         }
-                        .padding()
-                        .cornerRadius(8)
                     }
-                    .padding(.horizontal)
-                    .padding(.vertical, 4)
                 }
             }
+            
+            // serials
+            if let episodes = serial, !episodes.isEmpty {
+                SerialView(episodes: episodes)
+            }
         }
+    }
 
+    struct SerialView: View {
+        
+        // Adjust columns as needed for your UI
+        let columns = [
+            GridItem(.flexible(), spacing: 16),
+            GridItem(.flexible(), spacing: 16),
+            GridItem(.flexible(), spacing: 16),
+            GridItem(.flexible(), spacing: 16),
+            GridItem(.flexible(), spacing: 16),
+            GridItem(.flexible(), spacing: 16),
+        ]
+        
+        let episodes: [SerialListItemUI]
+        
+        var body: some View {
+            LazyVGrid(columns: columns, spacing: 14) {
+                ForEach(episodes) { episode in
+                    NavigationLink(
+                        destination: PlayerView(key: episode.playKey ?? "", autoplay: 0)
+                    ) {
+                        Text(episode.name ?? "")
+                    }
+                }
+            }
+            .padding(16)
+        }
     }
 }
+
 extension VideoDetailUI {
     public static let mockVideoDetail = VideoDetailUI(
         id: 12345,
