@@ -44,7 +44,9 @@ struct GalleryView: View {
                 }
             }
         }
+        #if os(tvOS)
         .navigationSplitViewStyle(.balanced)
+        #endif
         .onChange(of: selectedGroup) { oldGroup, newGroup in
             if let group = newGroup {
                 genreVM.loadGenres(forGroup: group)
