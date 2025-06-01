@@ -134,14 +134,21 @@ class PlayURLService {
     func mapPlayUrl(
         for source: String?
     ) -> String? {
-        guard let querySourceString = source else { return nil }
-        let pathComponent = String(querySourceString.dropFirst(20))
+        guard let source = source, source.hasPrefix(ServiceConstants().baseUrl)
+        else {
+            return source
+        }
+
+        let querySourceString = String(
+            source.dropFirst(ServiceConstants().baseUrl.count)
+        )
+
         let playm3u8WithVV = ServiceConstants().getCustomizePathUrl(
-            queryPath: pathComponent,
+            queryPath: querySourceString,
             queryParamString: nil
         )
 
-        debugPrint(playm3u8WithVV)
+        debugPrint("updated media source: \(playm3u8WithVV)")
 
         return playm3u8WithVV
     }
