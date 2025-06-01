@@ -23,11 +23,6 @@ class VideoDetailViewModel: ObservableObject {
                 switch result {
                 case .success(let detail):
                     self?.videoDetail = VideoDetailUI(from: detail)
-//                    debugPrint("if load serial: \(self?.videoDetail?.isSerial)")
-//                    if self?.videoDetail?.isSerial == true, let video = self?.videoDetail {
-//                        debugPrint("start to load serial")
-//                        self?.loadVideoSerials(videoId: videoId, genreKey: video.genreKey, taxis: String(video.taxis))
-//                    }
                 case .failure(let error):
                     self?.errorMessage = "加载失败: \(error.localizedDescription)"
                 }
@@ -36,7 +31,6 @@ class VideoDetailViewModel: ObservableObject {
     }
 
     func loadVideoSerials(videoId: String, genreKey: String) {
-        debugPrint("loadVideoSerials \(videoId)")
         isLoading = true
         errorMessage = nil
         detailService.fetchSeries(

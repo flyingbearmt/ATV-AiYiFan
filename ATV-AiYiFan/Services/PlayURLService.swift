@@ -96,14 +96,15 @@ class PlayURLService {
 
     func fetchPlayURL(
         for id: String,
-        autoplay:Int,
+        autoplay: Int,
         completion: @escaping (Result<PlayURLInfo?, Error>) -> Void
     ) {
-        let querySting = "cinema=1&id=\(id)&a=\(autoplay)&lang=none&usersign=1&region=US&device=1&isMasterSupport=1"
-        
+        let querySting =
+            "cinema=1&id=\(id)&a=\(autoplay)&lang=none&usersign=1&region=US&device=1&isMasterSupport=1"
+
         let urlString = ServiceConstants().getQueryUrl(
             queryParamString: querySting,
-            basePathType: "videoplay"
+            basePathType: "videoplaysourcelist"
         )
         guard let url = URL(string: urlString) else {
             completion(.success(nil))
@@ -128,5 +129,20 @@ class PlayURLService {
                 completion(.failure(error))
             }
         }.resume()
+    }
+
+    func mapPlayUrl(
+        for source: String?
+    ) -> String? {
+        guard let querySourceString = source else { return nil }
+        let pathComponent = String(querySourceString.dropFirst(20))
+        let playm3u8WithVV = ServiceConstants().getCustomizePathUrl(
+            queryPath: pathComponent,
+            queryParamString: nil
+        )
+
+        debugPrint(playm3u8WithVV)
+
+        return playm3u8WithVV
     }
 }
