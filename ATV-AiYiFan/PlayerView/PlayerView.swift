@@ -63,7 +63,7 @@ struct PlayerView: View {
                         if let autoClarity = clarities.first(where: {
                             $0.description == "auto"
                         }) {
-                            playURL = autoClarity.path?.rtmp
+                            playURL = autoClarity.path?.result
                         }
                         // 2. If not found, find the highest bitrate with a valid path
                         if playURL == nil {
@@ -73,18 +73,20 @@ struct PlayerView: View {
                             if let best = sorted.first(where: {
                                 ($0.path?.rtmp?.isEmpty == false)
                             }) {
-                                playURL = best.path?.rtmp
+                                playURL = best.path?.result
                             }
                         }
                         // 3. Fallback: use the first available one
                         if playURL == nil {
-                            playURL = clarities.first?.path?.rtmp
+                            playURL = clarities.first?.path?.result
                         }
                     }
-                    if let urlString = playURL,
+                    let updatedURL = PlayURLService.shared.mapPlayUrl(for: playURL)
+                    
+                    if let urlString = updatedURL,
                         let url = URL(string: urlString), !urlString.isEmpty
                     {
-                        print("[PlayerView] Playing URL: \(urlString)")
+                        debugPrint("[PlayerView] Playing URL: \(urlString)")
                         let avPlayer = AVPlayer(url: url)
                         player = avPlayer
                         avPlayer.play()
