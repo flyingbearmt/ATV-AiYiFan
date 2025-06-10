@@ -16,7 +16,6 @@ struct VideoDetailHost: View {
                 VideoDetailView(
                     videoDetail: detail,
                     serial: viewModel.serialList
-
                 )
             } else if let detail = viewModel.videoDetail {
                 Text("无法获取播放Key (No play key found)")
@@ -28,13 +27,12 @@ struct VideoDetailHost: View {
                 Text("播放信息未加载 (Play info not loaded)")
                     .foregroundColor(.secondary)
             }
-            Spacer()
         }
         .onAppear {
             viewModel.loadVideoDetail(videoId: videoId)
             viewModel.loadVideoSerials(videoId: videoId, genreKey: genreId)
         }
-        .padding()
+        .padding(.top, 70)
         .navigationTitle(viewModel.videoDetail?.title ?? "Video")
     }
 }
@@ -61,20 +59,20 @@ struct VideoDetailView: View {
                         .fill(Color.gray.opacity(0.3))
                         .frame(width: 300, height: 400)
                 }
-                
+
                 // Title and metadata
                 VStack(alignment: .leading, spacing: 24) {
                     Text(videoDetail.title)
                         .font(.largeTitle)
                         .fontWeight(.bold)
                         .lineLimit(2)
-                    
+
                     HStack(spacing: 16) {
                         if let year = videoDetail.postYear {
                             Text(String(year))
                                 .font(.subheadline)
                         }
-                        
+
                         if let rating = videoDetail.rating {
                             HStack(spacing: 4) {
                                 Image(systemName: "star.fill")
@@ -94,7 +92,7 @@ struct VideoDetailView: View {
                                 .padding(.top, 16)
                         }
                     }
-                    
+
                     // Description
                     if let overview = videoDetail.overviewDescription {
                         VStack(alignment: .leading) {
@@ -108,16 +106,17 @@ struct VideoDetailView: View {
                     }
                 }
             }
-            
+
             // serials
             if let episodes = serial, !episodes.isEmpty {
                 SerialView(episodes: episodes)
+                    .padding(.top, 8)
             }
         }
     }
 
     struct SerialView: View {
-        
+
         // Adjust columns as needed for your UI
         let columns = [
             GridItem(.flexible(), spacing: 16),
@@ -127,20 +126,24 @@ struct VideoDetailView: View {
             GridItem(.flexible(), spacing: 16),
             GridItem(.flexible(), spacing: 16),
         ]
-        
+
         let episodes: [SerialListItemUI]
-        
+
         var body: some View {
-            LazyVGrid(columns: columns, spacing: 14) {
-                ForEach(episodes) { episode in
-                    NavigationLink(
-                        destination: PlayerView(key: episode.playKey ?? "", autoplay: 0)
-                    ) {
-                        Text(episode.name ?? "")
+            ScrollView {
+                LazyVGrid(columns: columns, spacing: 14) {
+                    ForEach(episodes) { episode in
+                        NavigationLink(
+                            destination: PlayerView(
+                                key: episode.playKey ?? "",
+                                autoplay: 0
+                            )
+                        ) {
+                            Text(episode.name ?? "")
+                        }
                     }
                 }
             }
-            .padding(16)
         }
     }
 }

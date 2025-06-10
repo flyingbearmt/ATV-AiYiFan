@@ -155,7 +155,6 @@ class DetailService {
         let querySting =
             "cinema=1&vid=\(movieKey)&lsk=1&taxis=1&cid=\(genreKey)"
 
-        debugPrint("load serials: \(querySting)")
         let urlString = ServiceConstants().getQueryUrl(
             queryParamString: querySting,
             basePathType: "seriesList"

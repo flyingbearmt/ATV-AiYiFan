@@ -64,16 +64,29 @@ struct GalleryView: View {
 struct SideGroupView: View {
     let groups: [Group]
     @Binding var selection: Group?
-
+    
     var body: some View {
-        List(selection: $selection) {
-            ForEach(groups) { group in
-                NavigationLink(value: group) {
-                    Label(group.name, systemImage: group.imageTag)
-                        .tag(group)
+        VStack(spacing: 0) {
+            List(selection: $selection) {
+                ForEach(groups) { group in
+                    NavigationLink(value: group) {
+                        Label(group.name, systemImage: group.imageTag)
+                            .tag(group)
+                    }
                 }
             }
+            .navigationTitle("板块分类")
+            
+            // Add a divider and a footer link at the bottom
+            Divider()
+            NavigationLink(destination: LegalPage()) {
+                Label("法律声明", systemImage: "doc.text")
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.vertical, 4)
+                    .padding(.horizontal, 4)
+                    .background(Color(.systemGray))
+            }
+            .buttonStyle(PlainButtonStyle())
         }
-        .navigationTitle("板块分类")
     }
 }
