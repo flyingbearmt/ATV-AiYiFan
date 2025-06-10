@@ -30,7 +30,7 @@ struct LegalPage: View {
 
         2.3 本应用提供的链接播放服务，旨在为用户提供信息索引和便利。我们尊重版权，并致力于遵守适用的版权法律和法规。
 
-        2.4 如果您是版权所有者，认为懒人影视上展示或链接的内容侵犯了您的权利，请通过 与我们联系。 我们将在收到符合法律要求的有效通知后，尽快移除或屏蔽相关链接。请提供充分的权属证明和侵权材料具体信息。
+        2.4 如果您是版权所有者，认为懒人影视上展示或链接的内容侵犯了您的权利，请通过[clarktong8@gmail.com]与我们联系。 我们将在收到符合法律要求的有效通知后，尽快移除或屏蔽相关链接。请提供充分的权属证明和侵权材料具体信息。
         """,
 
         "3. 内容免责": """
@@ -85,7 +85,7 @@ struct LegalPage: View {
         }
         .navigationTitle("法律声明")
         #if os(tvOS)
-            .padding(.top, 70)
+            .padding(.top, 30)
             .onMoveCommand { direction in
                 // Handle remote swipes for scrolling
                 NotificationCenter.default.post(
