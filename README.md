@@ -17,9 +17,9 @@
 - 评分
 
 <!-- 在这里添加应用截图 -->
-![](imgs/genre.png)
-![](imgs/listbrowser.png)
-![](imgs/movie_detail.png)
+![](image/genre.png)
+![](image/listbrowser.png)
+![](image/movie_detail.png)
 
 ### 未签名iPA文件
 
