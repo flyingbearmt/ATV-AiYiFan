@@ -71,7 +71,6 @@ struct BaseResponse<T: Codable>: Codable {
     let ret: Int
     let data: BaseData<T>
     let msg: String
-    let debug: String
 }
 
 struct BaseData<T: Codable>: Codable {

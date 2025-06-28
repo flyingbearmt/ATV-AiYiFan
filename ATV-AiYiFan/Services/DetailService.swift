@@ -54,6 +54,8 @@ struct VideoDetail: Codable, Identifiable {
     let score: String?
     let isWide: Bool?
     let watchTimeout: Int?
+    let languageList: [String]?
+    let copyRightInfo: String?
 }
 
 struct Publisher: Codable {
