@@ -73,14 +73,17 @@ class CategoryBrowserService {
 
     func fetchCategoryItems(
         forPath path: String,
-        completion: @escaping (Result<[CategoryBrowserItem], Error>) -> Void
+        page: Int = 1,
+        pageSize: Int = 36,
+        completion: @escaping (Result<(items: [CategoryBrowserItem], hasMorePages: Bool), Error>) -> Void
     ) {
         let querySting =
-            "cinema=1&page=1&size=36&orderby=0&desc=1&cid=\(path)&isserial=-1&isIndex=-1&isfree=-1"
+            "cinema=1&page=\(page)&size=\(pageSize)&orderby=0&desc=1&cid=\(path)&isserial=-1&isIndex=-1&isfree=-1"
         let urlString = ServiceConstants().getQueryUrl(
             queryParamString: querySting,
             basePathType : "search"
         )
+        debugPrint(urlString)
         guard let url = URL(string: urlString) else {
             completion(.failure(NSError(domain: "Invalid URL", code: -1)))
             return
@@ -100,7 +103,9 @@ class CategoryBrowserService {
                     from: data
                 )
                 let items = decoded.data?.info?.flatMap { $0.result } ?? []
-                completion(.success(items))
+                // Determine if more pages exist based on whether we received a full page
+                let hasMorePages = items.count >= pageSize
+                completion(.success((items: items, hasMorePages: hasMorePages)))
             } catch {
                 completion(.failure(error))
             }

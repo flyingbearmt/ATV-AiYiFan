@@ -34,6 +34,9 @@ struct MovieListView: View {
                         ) {
                             MovieThumnail(movie: movie)
                                 .padding(.bottom, 8)
+                                .onAppear {
+                                    movieVM.loadMoreIfNeeded(currentItem: movie)
+                                }
                         }
                         .buttonStyle(PlainButtonStyle())
                     }
