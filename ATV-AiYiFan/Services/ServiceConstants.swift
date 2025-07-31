@@ -9,9 +9,9 @@ import Foundation
 
 struct ServiceConstants {
     let baseUrl = "https://m10.yfsp.tv/"
-    let privatekey = "SqE3JSqE34uDZOrCIusE"
+    let privatekey = "SrCpJSrCpapCJCqCIurC"
     let publickey =
-        "CJSqE34uDZOrCIusELyggQzDZWkCJarBZ4oE2upCLyp71cn6x4PiHcp6foQ6Z6S73CPCPiSCR4p6hAnCXiS6YzDZOtC3OnPJOmP3WrCZPbC30qDZTaOsPcDZCpOp9XOp4"
+        "CJSrCpapCJCqCIurCZ5VLLDVDZWkCJarBZ4oE2upCLyp69eP7BCO6R4QcRCQC9YQCJ2minkmiJASCncOifoQcgzCJKsD6GtOsCoC6CoPc9XC6OvPJWuPZLcCcCoEMGpOp5"
 
     // Add a map for base paths
     private let basePathMap: [String: String] = [
