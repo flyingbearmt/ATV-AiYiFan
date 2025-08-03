@@ -9,9 +9,14 @@ import SwiftUI
 
 @main
 struct ATV_AiYiFanApp: App {
+    
+    @StateObject private var viewModel = HTMLParserViewModel()
+    
     var body: some Scene {
         WindowGroup {
-            GalleryView()
+            GalleryView().onAppear {
+                    viewModel.fetchConfig()
+                }
         }
     }
 }
