@@ -8,10 +8,10 @@ import CryptoKit
 import Foundation
 
 struct ServiceConstants {
-    let baseUrl = "https://m10.yfsp.tv/"
-    let privatekey = "SrCpJSrCpapCJCqCIurC"
-    let publickey =
-        "CJSrCpapCJCqCIurCZ5VLLDVDZWkCJarBZ4oE2upCLyp69eP7BCO6R4QcRCQC9YQCJ2minkmiJASCncOifoQcgzCJKsD6GtOsCoC6CoPc9XC6OvPJWuPZLcCcCoEMGpOp5"
+    var mainUrl: String { ServiceConfigManager.mainUrl }
+    var mediaBaseUrl: String { ServiceConfigManager.mediaBaseUrl }
+    var privatekey: String { ServiceConfigManager.privateKey }
+    var publickey: String { ServiceConfigManager.publicKey }
 
     // Add a map for base paths
     private let basePathMap: [String: String] = [
@@ -38,7 +38,7 @@ struct ServiceConstants {
         debugPrint("normal query, query: \(queryParamString)")
         let chosenBasePAth = basePathMap[basePathType] ?? ""
         var sourceUrl = ""
-        sourceUrl += baseUrl
+        sourceUrl += mediaBaseUrl
         sourceUrl += chosenBasePAth
         sourceUrl += queryParamString
         sourceUrl += "&vv=\(getmd5(queryPath: queryParamString))"
@@ -54,7 +54,7 @@ struct ServiceConstants {
             "CustomizePath& query: path:\(queryPath), query: \(String(describing: queryParamString))"
         )
         var sourceUrl = ""
-        sourceUrl += baseUrl
+        sourceUrl += mediaBaseUrl
         sourceUrl += queryPath
         if let queryParamString = queryParamString, !queryParamString.isEmpty {
             sourceUrl += "?" + queryParamString

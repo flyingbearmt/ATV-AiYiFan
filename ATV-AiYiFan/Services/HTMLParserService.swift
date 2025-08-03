@@ -9,7 +9,6 @@ import SwiftUI
 import Combine
 import Foundation
 
-// MARK: - HTML Parser Service
 class HTMLParserService {
     // A static shared instance for convenience
     static let shared = HTMLParserService()
@@ -120,6 +119,9 @@ class HTMLParserViewModel: ObservableObject {
                     if let config = config {
                         self.pConfig = config
                         print("✅ pConfig extracted: \(config)")
+                        
+                        // Automatically update the keys when config is found
+                        self.updateServiceConfig()
                     } else {
                         print("⚠️ No pConfig found in the HTML")
                     }
@@ -137,6 +139,27 @@ class HTMLParserViewModel: ObservableObject {
     }
     
     func getPrivateKey() -> String? {
+        // Handle privateKey that could be either a string or an array
+        if let privateKeyArray = pConfig?["privateKey"] as? [String], let firstKey = privateKeyArray.first {
+            return firstKey
+        }
         return pConfig?["privateKey"] as? String
+    }
+    
+    // Update service configuration using the ServiceConfigManager
+    func updateServiceConfig() {
+        guard let publicKey = getPublicKey(), 
+              let privateKey = getPrivateKey() else {
+            print("⚠️ Cannot update configuration: Missing keys")
+            return
+        }
+        
+        // Use the ServiceConfigManager to update the keys
+        ServiceConfigManager.updateConfig(
+            privateKey: privateKey,
+            publicKey: publicKey
+        )
+        
+        print("✅ Updated service config - Public: \(publicKey.prefix(10))... Private: \(privateKey.prefix(10))...")
     }
 }

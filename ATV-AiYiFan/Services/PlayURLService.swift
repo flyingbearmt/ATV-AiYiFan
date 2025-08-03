@@ -134,13 +134,13 @@ class PlayURLService {
     func mapPlayUrl(
         for source: String?
     ) -> String? {
-        guard let source = source, source.hasPrefix(ServiceConstants().baseUrl)
+        guard let source = source, source.hasPrefix(ServiceConstants().mediaBaseUrl)
         else {
             return source
         }
 
         let querySourceString = String(
-            source.dropFirst(ServiceConstants().baseUrl.count)
+            source.dropFirst(ServiceConstants().mediaBaseUrl.count)
         )
 
         let playm3u8WithVV = ServiceConstants().getCustomizePathUrl(
